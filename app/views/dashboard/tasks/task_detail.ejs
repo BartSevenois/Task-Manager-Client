@@ -1,0 +1,87 @@
+<%-include('../../partials/top_html.ejs') %>
+<%-include('../../partials/dashboard_navbar.ejs') %>
+<%
+var date = new Date(task.deadline);
+    var dd = date.getDate(task.deadline);
+    var mm = date.getMonth() + 1; //January is 0!
+
+    var yyyy = date.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var time = date.toLocaleTimeString();
+    time = time.substring(0, time.length-3)
+    var date = dd + '/' + mm + '/' + yyyy;
+%>
+
+<div class="dashboard">
+    <ul uk-accordion>
+        <li class="uk-open dashboard-block tasks">
+            <a class="uk-accordion-title" href="#">
+                <%= task.title.substring(0,40)%><% if(task.title.substring(0,40).length < task.title.length) {%><%= '...' %><%}%></a>
+            <div class="uk-accordion-content">
+            <form class="uk-form-horizontal uk-margin-large" method="POST" action="/updateTask/<%= task.id%>">
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Title</label>
+                <div class="uk-form-controls">
+                    <input type="" id="form-horizontal-text" name="title" value="<%= task.title%>" class="uk-input">
+
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Description</label>
+                <div class="uk-form-controls">
+                    <textarea rows="5" cols="" class="uk-textarea" name="description"><%= task.description%></textarea>
+
+                </div>
+            </div>
+            <div class="uk-margin deadline">
+                <label class="uk-form-label" for="form-horizontal-text">Deadline</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="datepicker" class="uk-input" name="deadlineDate" placeholder="Deadline date..." value="<%= date %>">
+                    <input type="text" id="timepicker" class="uk-input" name="deadlineTime" placeholder="Deadline time..." value="<%= time %>">
+
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-select">Status</label>
+                <div class="uk-form-controls">
+                
+                    <select style="" class="uk-select" id="form-horizontal-select" name="status">
+                        <option>Not done</option>
+                        <option>Done</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary">Update</button>
+            </div>
+        </form>
+            </div>
+        </li>
+    </ul>
+</div>
+<script>
+var status = "<%= task.status %>"
+if (status == "not done"){
+    document.getElementById("form-horizontal-select").style.color = "#d34848";
+    document.getElementById("form-horizontal-select").style.borderColor = "#d34848";
+}
+    $('#datepicker').datetimepicker({
+        timepicker: false,
+        format:'d/m/Y'
+    });
+    $('#timepicker').datetimepicker({
+        datepicker: false,
+        format:'H:i'
+    });
+    
+    
+   
+</script>
+<%-include('../../partials/bottom_html.ejs') %>

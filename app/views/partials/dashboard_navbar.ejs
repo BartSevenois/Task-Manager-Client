@@ -1,0 +1,36 @@
+<div class="nav-dashboard">
+    <div class="logo">
+        <img src="/logo.png">
+        
+    </div>
+    <div class="uk-card-body">
+        <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+            <li><a href="/dashboard"><span class="uk-margin-small-right" style="color:white" uk-icon="icon: thumbnails"></span>
+                    Dashboard</a></li>
+            <li class="uk-parent">
+                <a href="#"><span class="uk-margin-small-right" style="color:white" uk-icon="icon: user"></span><%= user.firstname + ' ' + user.lastname.charAt(0) + '.'%></a>
+                <ul class="uk-nav-sub">
+                    <li><a href="/myTasks">My tasks</a></li>
+                    <li><a href="/createTask">Create task</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<nav class="uk-navbar-container vertical-navbar" uk-navbar>
+    <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#"><span uk-icon="user" style="margin-right: 10px"></span>
+                    <%= user.firstname + ' ' + user.lastname.charAt(0) + '.'%></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li class=""><a href="#">Profile</a></li>
+                        <li class=""><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

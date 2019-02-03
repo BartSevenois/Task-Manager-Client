@@ -1,0 +1,56 @@
+<%-include('../../partials/top_html.ejs') %>
+<%-include('../../partials/dashboard_navbar.ejs') %>
+
+
+<div class="dashboard">
+        <ul uk-accordion>
+            <li class="uk-open dashboard-block tasks">
+                <a class="uk-accordion-title" href="#">Tasks</a>
+                <div class="uk-accordion-content">
+                    <table class="uk-table uk-table-divider">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i<tasks.length; i++){%>
+                            <% 
+                            var date = new Date(tasks[0].deadline);
+                            var dd = date.getDate();
+                            var mm = date.getMonth() + 1; //January is 0!
+
+                            var yyyy = date.getFullYear();
+                            if (dd < 10) {
+                                dd = '0' + dd;
+                            }
+                            if (mm < 10) {
+                                mm = '0' + mm;
+                            }
+                            var time = date.toLocaleTimeString();
+                            time = time.substring(0, time.length-3)
+                            var date = dd + '/' + mm + '/' + yyyy;
+                            %>
+                            <tr>
+                                <td>
+                                <a href="/tasks/<%= tasks[i].id%>"><%= tasks[i].title.substring(0,40)%><% if(tasks[i].title.substring(0,40).length < tasks[i].title.length) {%><%= '...' %><%}%></a>
+                                </td>
+                                <td>
+                                    <%= tasks[i].status%>
+                                </td>
+                                <td>
+                                <span style="margin-right:5px;" uk-icon="calendar"></span><%= date%> <span style="margin-left: 10px; color: green"><span style="margin-right:5px;" uk-icon="clock"></span><%= time%></span>
+                                </td>
+                            </tr>
+                            <% } %>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+        </ul>
+</div>
+<%-include('../../partials/bottom_html.ejs') %>

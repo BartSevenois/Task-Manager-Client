@@ -1,0 +1,47 @@
+<%-include('../partials/top_html.ejs') %>
+<%-include('../partials/dashboard_navbar.ejs') %>
+
+
+<div class="dashboard">
+        <ul uk-accordion>
+            <li class="uk-open dashboard-block">
+                <a class="uk-accordion-title" href="#">Tasks</a>
+                <div class="uk-accordion-content">
+                    <table class="uk-table uk-table-divider">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i<tasks.length; i++){%>
+                            <tr>
+                                <td>
+                                    <%= tasks[i].status%>
+                                </td>
+                                <td>
+                                    <%= tasks[i].title%>
+                                </td>
+                                <td>
+                                    <%= tasks[i].deadline%>
+                                </td>
+                            </tr>
+                            <% } %>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </li>
+            <li class="uk-open dashboard-block">
+                <a class="uk-accordion-title" href="#">Agenda</a>
+                <div class="uk-accordion-content">
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat. Duis aute irure dolor reprehenderit.</p>
+                </div>
+            </li>
+        </ul>
+</div>
+<%-include('../partials/bottom_html.ejs') %>

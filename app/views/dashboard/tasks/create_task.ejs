@@ -1,0 +1,57 @@
+<%-include('../../partials/top_html.ejs') %>
+<%-include('../../partials/dashboard_navbar.ejs') %>
+<div class="dashboard">
+    <div class="dashboard-block">
+        <form class="uk-form-horizontal uk-margin-large" method="POST" action="/createTask">
+            <h3>Create task</h3>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Title</label>
+                <div class="uk-form-controls">
+                    <input type="" id="form-horizontal-text" name="title" value="" class="uk-input">
+
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Description</label>
+                <div class="uk-form-controls">
+                    <textarea rows="5" cols="" class="uk-textarea" name="description"></textarea>
+
+                </div>
+            </div>
+            <div class="uk-margin deadline">
+                <label class="uk-form-label" for="form-horizontal-text">Deadline</label>
+                <div class="uk-form-controls">
+                    <input type="text" id="datepicker" class="uk-input" name="deadlineDate" placeholder="Deadline date...">
+                    <input type="text" id="timepicker" class="uk-input" name="deadlineTime" placeholder="Deadline time...">
+
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-select">Status</label>
+                <div class="uk-form-controls">
+                    <select class="uk-select" id="form-horizontal-select" name="status">
+                        <option>Not done</option>
+                        <option>Done</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary">Create</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<script>
+    $('#datepicker').datetimepicker({
+        timepicker: false,
+        format:'d/m/Y'
+    });
+    $('#timepicker').datetimepicker({
+        datepicker: false,
+        format:'H:i'
+    });
+</script>
+<%-include('../../partials/bottom_html.ejs') %>
