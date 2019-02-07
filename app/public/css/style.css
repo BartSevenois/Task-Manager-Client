@@ -120,3 +120,7 @@ body {
 .deadline input:nth-child(2) {
     width: 15%;
 }
+
+p {
+    padding: 0px;
+}

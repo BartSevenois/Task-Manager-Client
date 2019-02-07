@@ -6,13 +6,16 @@
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: user"></span>
                 <input class="uk-input" name="email" type="text" placeholder="Email">
+                
             </div>
+            <% if(!errMail == '') {%><p><%= errMail %></p><%}%>
         </div>
         <div class="uk-margin">     
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: lock"></span>
                 <input class="uk-input" name="password" type="password" placeholder="Password">
             </div>
+            <% if(!errPassword == '') {%><p><%= errPassword %></p><%}%>
         </div>
         <input class="uk-button uk-button-primary" type="submit" value="Sign Up" />
     </form>

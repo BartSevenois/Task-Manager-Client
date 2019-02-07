@@ -11,7 +11,10 @@ module.exports = function(app) {
     app.get('/tasks/:id', isLoggedIn, dashboardController.taskDetail)
 
 
-    app.post('/createTask', dashboardController.createTask)
+    app.post('/createTask', dashboardController.createTask);
+    app.post('/updateTask/:id', dashboardController.updateTask);
+
+
 
 	function isLoggedIn(req, res, next){
         if (req.session.auth == undefined) {

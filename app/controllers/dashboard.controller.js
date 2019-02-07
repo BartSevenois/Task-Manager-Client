@@ -1,6 +1,6 @@
 var exports = module.exports = {}
 var request = require('request-promise');
-
+var taskAPI = require('../functions/tasksAPI');
 // GET
 exports.renderDashboard = function (req, res) {
     res.render('dashboard/dashboard', {
@@ -24,90 +24,66 @@ exports.renderCreateTask = (req, res) => {
 }
 
 exports.myTasks = (req, res) => {
-    console.log(req.session.user);
-    const createTask = {
-        method: 'GET',
-        uri: 'http://localhost:8080/api/tasks/user/' + req.session.user.id,
-        headers: {
-            "x-access-token": req.session.auth.accessToken,
-        },
-        json: true
-    }
+    // Variables
+    var token = req.session.auth.accessToken,
+        userId = req.session.user.id;
 
-    request(createTask)
-        .then(function (response) {
-            console.log(response)
-            res.render('dashboard/tasks/my_tasks', {
-                user: req.session.user,
-                tasks: response,
-                page_title: 'My tasks'
-            });
-
-        })
-        .catch(function (err) {
-            console.log(err)
-            res.redirect('/dashboard');
-        })
+    taskAPI.getMyTasks(token, userId, function (data) {
+        res.render('dashboard/tasks/my_tasks', {
+            user: req.session.user,
+            tasks: data,
+            page_title: 'My tasks'
+        });
+    })
 }
 
 exports.taskDetail = (req, res) => {
-    console.log(req.session.user);
-    const createTask = {
-        method: 'GET',
-        uri: 'http://localhost:8080/api/task/' + req.params.id,
-        headers: {
-            "x-access-token": req.session.auth.accessToken,
-        },
-        body: {
-            userId: req.session.user.id
-        },
-        json: true
-    }
+    // Variables
+    var token = req.session.auth.accessToken,
+        userId = req.session.user.id,
+        taskId = req.params.id;
 
-    request(createTask)
-        .then(function (response) {
-            console.log(response.title)
-            res.render('dashboard/tasks/task_detail', {
-                user: req.session.user,
-                task: response[0],
-                page_title: 'My tasks'
-            });
-
-        })
-        .catch(function (err) {
-            console.log(err)
-            res.redirect('/dashboard');
-        })
-  
+    taskAPI.getTask(token, taskId, userId, function (data) {
+        res.render('dashboard/tasks/task_detail', {
+            user: req.session.user,
+            task: data[0],
+            page_title: 'My tasks'
+        });
+    })
 }
 
 // POST
 exports.createTask = (req, res) => {
+    // Variables
+    var token = req.session.auth.accessToken,
+        title = req.body.title,
+        description = req.body.description,
+        deadlineDate = req.body.deadlineDate,
+        deadlineTime = req.body.deadlineTime,
+        status = req.body.status,
+        userId = req.session.user.id;
 
-    const createTask = {
-        method: 'POST',
-        uri: 'http://localhost:8080/api/task/create',
-        headers: {
-            "x-access-token": req.session.auth.accessToken,
-        },
-        body: {
-            title: req.body.title,
-            description: req.body.description,
-            deadlineDate: req.body.deadlineDate,
-            deadlineTime: req.body.deadlineTime,
-            status: req.body.status,
-            userId: req.session.user.id
-        },
-        json: true
-    }
-
-    request(createTask)
-        .then(function (response) {
+    taskAPI.createTask(token, title, description, deadlineDate, deadlineTime, status, userId, function (data) {
+        if (data === true) {
             res.redirect('/myTasks');
+        }
+    })
 
-        })
-        .catch(function (err) {
-            console.log(err)
-            res.redirect('/signup');
-        })
+}
+
+exports.updateTask = (req, res) => {
+    // Variables
+    var token = req.session.auth.accessToken,
+        title = req.body.title,
+        description = req.body.description,
+        deadlineDate = req.body.deadlineDate,
+        deadlineTime = req.body.deadlineTime,
+        status = req.body.status,
+        taskId = req.params.id;
+
+    taskAPI.updateTask(token, title, description, deadlineDate, deadlineTime, status, taskId, function (data) {
+        if (data === true) {
+            res.redirect('/myTasks');
+        }
+    })
 }
